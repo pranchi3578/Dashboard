@@ -61,9 +61,15 @@ export default class index extends Component {
         height:"100vh",
         alignItems:"center",
         flexDirection:"column" }}>
+          <div style={{marginBottom:"8px"}}>
+          <Card  
+           style={{flex:1,width:"600px",height:"15px",backgroundColor:"crimson",color:"black"}}>
+            <p>snhds</p>  
+          </Card>
+          </div>
     <Card 
     hoverable
-    style={{ width: "600px",height:"600px",boxShadow:"5px 5px #444444"}}>
+    style={{ width: "600px",height:"600px",boxShadow:"5px 5px #444444",backgroundColor:"gainsboro"}}>
         <div 
         style={{width:"500px",height:"550px",
         display:"flex",justifyContent:"flex-end",flexDirection:"column",paddingLeft:"510px"}}>
