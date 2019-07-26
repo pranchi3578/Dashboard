@@ -1,11 +1,17 @@
 import React, { Component } from "react";
 import { Card, Row } from 'antd';
 import { Modal , Button } from 'antd';
+import MyUpload from '../widgets/uploadimage';
+import UploadVideo from'../widgets/uploadvideo';
 
 
-
+const ButtonGroup = Button.Group;
 export default class index extends Component {
-  state = { visible: false };
+  state = { visible: false,
+            showit: false ,
+          showoff:false,
+        };
+  
 
   showModal = () => {
     this.setState({
@@ -18,15 +24,28 @@ export default class index extends Component {
       visible: false,
     });
   };
-  confirm(){
-    Modal.confirm({
-      title: 'Confirm',
-      content: 'Bla bla ...',
-      okText: 'ok',
-      cancelText: 'cancel',
+  showImageModal=() => {
+    this.setState({
+      showit:true,
     });
-
   }
+  closeImageModal=() => {
+    this.setState({
+      showit:false,
+    });
+  }
+  showVideoModal=()=>{
+    this.setState({
+      showoff:true,
+    })
+  }
+  closeVideoModal=()=>{
+    this.setState({
+      showoff:false,
+    })
+  }
+  
+
   render() {
 
  
@@ -53,25 +72,57 @@ export default class index extends Component {
        shape="circle"
         icon="plus" 
         size="large"
-      onClick={this.confirm}
+      onClick={this.showModal}
       ></Button>
       </div>
   </Card>
        </div>
-      <div>
+      <div style={{width:"500px",height:"500px"}} >
       <Modal
-      title="Modal"
-      visible={this.state.visible}
-      onOk={this.hideModal}
+      
+      title="UPLOAD"
+      visible={this.state.visible}    
       onCancel={this.hideModal}
-      okText="ok"
+      okButtonProps={{hidden:true}}
       cancelText="cancel"
+      style={{flex:"1",display:"flex",justifyContent:"center",}}
     >
-      <p>Bla bla ...</p>
-      <p>Bla bla ...</p>
-      <p>Bla bla ...</p>
+      <div>
+      <ButtonGroup  style={{display:"flex",justifyContent:"center",width:"200px"}}>
+      <Button type="primary" icon="file-image"  size="large"
+      onClick={this.showImageModal} />
+      <Button type="primary" icon="video-camera" size="large"
+      onClick={this.showVideoModal} />
+    </ButtonGroup>
+      </div>
+      
     </Modal>
       </div>
+      <div>
+        <Modal
+        title="IMAGE"
+        visible={this.state.showit}    
+        onCancel={this.closeImageModal}
+        okButtonProps={{hidden:true}}
+        cancelText="cancel"
+        style={{flex:"1",display:"flex",justifyContent:"center",}}
+        >
+            <MyUpload/>
+        </Modal>
+      </div>
+       
+       <div>
+         <Modal
+         title="VIDEO"
+         visible={this.state.showoff}    
+         onCancel={this.closeVideoModal}
+         okButtonProps={{hidden:true}}
+         cancelText="cancel"
+         style={{flex:"1",display:"flex",justifyContent:"center",}}
+         >
+        <UploadVideo/>
+         </Modal>
+       </div>
     
       </div>
     );
