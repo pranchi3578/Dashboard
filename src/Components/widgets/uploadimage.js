@@ -1,51 +1,95 @@
-import { Upload, Button, Icon } from 'antd';
+import { Upload, Icon, Modal } from 'antd';
 import React, { Component } from "react";
 
-class MyUpload extends React.Component {
+function getBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
+}
+
+class PicturesWall extends React.Component {
   state = {
+    previewVisible: false,
+    previewImage: '',
     fileList: [
       {
         uid: '-1',
-        name: 'xxx.png',
+        name: 'image.png',
         status: 'done',
-        
+        url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      },
+      {
+        uid: '-2',
+        name: 'image.png',
+        status: 'done',
+        url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      },
+      {
+        uid: '-3',
+        name: 'image.png',
+        status: 'done',
+        url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      },
+      {
+        uid: '-4',
+        name: 'image.png',
+        status: 'done',
+        url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
+      },
+      {
+        uid: '-5',
+        name: 'image.png',
+        status: 'done',
+        url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
       },
     ],
   };
 
-  handleChange = info => {
-    let fileList = [...info.fileList];
+  handleCancel = () => this.setState({ previewVisible: false });
 
-    // 1. Limit the number of uploaded files
-    // Only to show one recent uploaded files, and old ones will be replaced by the new
-    fileList = fileList.slice(-1);
+  handlePreview = async file => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj);
+    }
 
-    // 2. Read from response and show file link
-    fileList = fileList.map(file => {
-      if (file.response) {
-        // Component will show file.url as link
-        file.url = file.response.url;
-      }
-      return file;
+    this.setState({
+      previewImage: file.url || file.preview,
+      previewVisible: true,
     });
-
-    this.setState({ fileList });
   };
 
+  handleChange = ({ fileList }) => this.setState({ fileList });
+
   render() {
-    const props = {
-      action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-      onChange: this.handleChange,
-      multiple: true,
-    };
+    const { previewVisible, previewImage, fileList } = this.state;
+    const uploadButton = (
+      <div>
+        <Icon type="plus" />
+        <div className="ant-upload-text">Upload</div>
+      </div>
+    );
     return (
-      <Upload {...props} fileList={this.state.fileList}>
-        <Button>
-          <Icon type="upload" /> Upload
-        </Button>
-      </Upload>
+      <div className="clearfix">
+        <Upload
+          action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+          listType="picture-card"
+          fileList={fileList}
+          onPreview={this.handlePreview}
+          onChange={this.handleChange}
+        >
+          {fileList.length >= 8 ? null : uploadButton}
+        </Upload>
+        <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
+          <img alt="example" style={{ width: '100%' }} src={previewImage} />
+        </Modal>
+      </div>
     );
   }
 }
 
-export default MyUpload;
+
+
+export default PicturesWall;

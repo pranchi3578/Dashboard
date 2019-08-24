@@ -56,20 +56,15 @@ export default class index extends Component {
       <div  style={{
         display:"flex",
         justifyContent:"center",
-        backgroundColor:"#000",
+        backgroundColor:'rgba(15,23,30,1)',
         width:"100vw",
         height:"100vh",
         alignItems:"center",
         flexDirection:"column" }}>
-          <div style={{marginBottom:"8px"}}>
-          <Card  
-           style={{flex:1,width:"600px",height:"15px",backgroundColor:"crimson",color:"black"}}>
-            <p>snhds</p>  
-          </Card>
-          </div>
+          
     <Card 
     hoverable
-    style={{ width: "600px",height:"600px",boxShadow:"5px 5px #444444",backgroundColor:"gainsboro"}}>
+    style={{ width: "600px",height:"600px",boxShadow:"2px 2px #888888",backgroundColor:"gainsboro"}}>
         <div 
         style={{width:"500px",height:"550px",
         display:"flex",justifyContent:"flex-end",flexDirection:"column",paddingLeft:"510px"}}>
@@ -109,11 +104,10 @@ export default class index extends Component {
         title="IMAGE"
         visible={this.state.showit}    
         onCancel={this.closeImageModal}
-        okButtonProps={{hidden:true}}
         cancelText="cancel"
         style={{flex:"1",display:"flex",justifyContent:"center",}}
         >
-            <MyUpload/>
+            <PicturesWall/>
         </Modal>
       </div>
        
@@ -122,7 +116,6 @@ export default class index extends Component {
          title="VIDEO"
          visible={this.state.showoff}    
          onCancel={this.closeVideoModal}
-         okButtonProps={{hidden:true}}
          cancelText="cancel"
          style={{flex:"1",display:"flex",justifyContent:"center",}}
          >
